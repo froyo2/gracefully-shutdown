@@ -16,8 +16,8 @@
     </parent>
 
     <properties>
-        <spring-boot-version>1.5.9.RELEASE</spring-boot-version>
-        <tomcat-embed-core-version>8.5.23</tomcat-embed-core-version>
+        <spring-boot-version>1.5.20.RELEASE</spring-boot-version>
+        <tomcat-embed-core-version>8.5.39</tomcat-embed-core-version>
         <spring-web-version>4.3.13.RELEASE</spring-web-version>
     </properties>
 
