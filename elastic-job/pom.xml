@@ -6,12 +6,12 @@
 
     <groupId>com.froyo2.shutdown</groupId>
     <artifactId>elastic-job</artifactId>
-    <version>1.0.0</version>
+    <version>${module-elastic-job-version}</version>
     <packaging>jar</packaging>
 
     <parent>
         <groupId>com.froyo2.shutdown</groupId>
-        <artifactId>all</artifactId>
+        <artifactId>parent</artifactId>
         <version>1.0.0</version>
     </parent>
 
@@ -35,9 +35,18 @@
         <dependency>
             <groupId>com.froyo2.shutdown</groupId>
             <artifactId>core</artifactId>
-            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 
-    
+
 </project>
