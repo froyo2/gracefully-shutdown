@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.froyo2.closer.CloserChain;
-import com.froyo2.closer.ElasticJobCloser;
 
 /**
  * ChiefShutdownHook
@@ -47,17 +46,11 @@ public class ChiefShutdownHook extends ShutdownThread {
         final boolean ready = SpringContextForShutdown.isReady();
         LOGGER.info("[GracefullyShutdown] SpringContextForShutdown is ready or not :" + ready);
         if (ready) {
-            close();
+            CloserChain.getInstance().doClose();
             runCustomShutdown();
         }
         runJvmHooks();
         LOGGER.info("[GracefullyShutdown] Exit Gracefully! Bye~~");
-    }
-
-    private void close() {
-        CloserChain closerChain = new CloserChain();
-        closerChain.addCloser(new ElasticJobCloser());
-        closerChain.doClose();
     }
 
     private void runCustomShutdown() {

@@ -10,9 +10,17 @@ import java.util.LinkedList;
  */
 public class CloserChain implements Closer {
 
+    private CloserChain(){}
+
+    private static CloserChain closerChain  = new CloserChain();
+
+    public static CloserChain getInstance() {
+        return closerChain;
+    }
+
     private LinkedList<Closer> chain = new LinkedList();
 
-    public CloserChain addCloser(Closer closer) {
+    public synchronized CloserChain addCloser(Closer closer) {
         chain.add(closer);
         return this;
     }

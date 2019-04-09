@@ -5,59 +5,37 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.froyo2</groupId>
-    <artifactId>gracefully-shutdown</artifactId>
+    <groupId>com.froyo2.shutdown</groupId>
+    <artifactId>all</artifactId>
     <version>1.0.0</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
-    <properties>
-        <springframework-version>4.0.6.RELEASE</springframework-version>
-        <elastic-job-version>2.1.5</elastic-job-version>
-    </properties>
+    <modules>
+        <module>core</module>
+        <module>spring-boot-1.0</module>
+        <module>spring-boot-2.0</module>
+        <module>elastic-job</module>
+    </modules>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>${springframework-version}</version>
-            <optional>true</optional>   <!--不传递依赖-->
-        </dependency>
-        <dependency>
-            <groupId>com.dangdang</groupId>
-            <artifactId>elastic-job-lite-core</artifactId>
-            <version>${elastic-job-version}</version>
-            <optional>true</optional>   <!--不传递依赖-->
-        </dependency>
-        <dependency>
-            <groupId>com.dangdang</groupId>
-            <artifactId>elastic-job-lite-spring</artifactId>
-            <version>${elastic-job-version}</version>
-            <optional>true</optional>   <!--不传递依赖-->
-        </dependency>
-    </dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.7.25</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>3.0.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>8</source>
+                    <target>8</target>
                 </configuration>
             </plugin>
         </plugins>
