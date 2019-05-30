@@ -16,6 +16,7 @@
         <module>spring-boot-1.0</module>
         <module>spring-boot-2.0</module>
         <module>elastic-job</module>
+        <module>dubbo-provider</module>
     </modules>
 
     <properties>

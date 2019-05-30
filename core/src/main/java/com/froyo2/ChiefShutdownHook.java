@@ -43,13 +43,30 @@ public class ChiefShutdownHook extends ShutdownThread {
         if (!destroyed.compareAndSet(false, true)) {
             return;
         }
-        final boolean ready = SpringContextForShutdown.isReady();
-        LOGGER.info("[GracefullyShutdown] SpringContextForShutdown is ready or not :" + ready);
-        if (ready) {
-            CloserChain.getInstance().doClose();
-            runCustomShutdown();
+        // 1.关闭组件，停止接收新请求，尽可能完成处理中的请求，这个操作可以与2并行，所以起一个单独的线程来做
+        Thread closerThread = null;
+        try {
+            closerThread = new Thread(() -> CloserChain.getInstance().doClose());
+            closerThread.start();
+        } catch (Throwable e) {
+            LOGGER.warn("[GracefullyShutdown] Error occurred while run closing components, skip", e);
         }
-        runJvmHooks();
+        // 2.回调业务方自定义函数
+        try {
+            runCustomShutdown();
+        } catch (Throwable e) {
+            LOGGER.warn("[GracefullyShutdown] Error occurred while run custom shutdown listeners, skip", e);
+        }
+        // 3.执行拦截到的jvm的shutdown hooks
+        try {
+            //保证第一步执行完
+            if (closerThread != null) {
+                closerThread.join();
+            }
+            runJvmHooks();
+        } catch (Throwable e) {
+            LOGGER.warn("[GracefullyShutdown] Error occurred while run jvm shutdown hooks, skip", e);
+        }
         LOGGER.info("[GracefullyShutdown] Exit Gracefully! Bye~~");
     }
 

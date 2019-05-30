@@ -36,7 +36,7 @@ public class CloserChain implements Closer {
                 LOGGER.info("[GracefullyShutdown] Error occurred while invoke " + closer.getClass() + ", skip");
             }
         }
-        LOGGER.info("[GracefullyShutdown] components Closed");
+        LOGGER.info("[GracefullyShutdown] All components closed");
     }
 
 }
